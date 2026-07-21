@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# 环境变量与密钥
+.env
+.streamlit/secrets.toml
+
+# 历史记录数据
+.volume_history/
+
+# 备份
+备份/
+
+# 视频文件（体积大，不放仓库）
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.m4v
+*.wav
+*.mp3
+*.aac
+*.flac
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# 稿件素材
+稿件/
+识别视频音量/
