@@ -138,12 +138,46 @@ def file_signature(files):
     return [(f.name, f.size) for f in files]
 
 
+def _check_password() -> bool:
+    """检查访问密码，密码从 Streamlit Secrets 读取，不硬编码在代码中"""
+    import hmac
+    # 从 secrets 读取密码，本地开发可在 .streamlit/secrets.toml 中设置 ACCESS_PASSWORD
+    # 部署时在 Streamlit Cloud → App Settings → Secrets 中配置 ACCESS_PASSWORD
+    correct_password = ""
+    try:
+        correct_password = st.secrets.get("ACCESS_PASSWORD", "")
+    except Exception:
+        pass
+    if not correct_password:
+        return True  # 未配置密码则不启用密码保护（本地开发兼容）
+
+    if st.session_state.get("auth_ok"):
+        return True
+
+    st.title("🔒 视频音量检测工具")
+    st.info("此工具需要访问密码，请联系管理员获取。")
+    with st.form("login_form"):
+        password = st.text_input("请输入访问密码", type="password")
+        submitted = st.form_submit_button("进入", use_container_width=True)
+    if submitted:
+        if hmac.compare_digest(str(password), str(correct_password)):
+            st.session_state.auth_ok = True
+            st.rerun()
+        else:
+            st.error("密码错误，请重试")
+    return False
+
+
 def main():
     st.set_page_config(
         page_title="视频音量检测工具",
         page_icon="📊",
         layout="wide"
     )
+
+    # 密码保护
+    if not _check_password():
+        return
 
     st.title("📊 视频音量检测工具")
     st.caption("基准：0 dBFS（数字满量程）· 数值越接近 0 音量越大 · 越负音量越小")
