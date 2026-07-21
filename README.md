@@ -53,58 +53,7 @@ pip install streamlit pandas
 ```
 
 ---
-
-### 2. Web 界面（推荐）
-
-启动服务（本机使用）：
-
-```bash
-python3 -m streamlit run volume_web.py --server.port 8501 --server.headless true
-```
-
-启动服务（允许内网同事访问）：
-
-```bash
-python3 -m streamlit run volume_web.py --server.port 8501 --server.headless true --server.address 0.0.0.0
-```
-
-> `--server.address 0.0.0.0` 让服务监听所有网卡，同内网的人才能通过你的 IP 访问。
-
-使用 macOS 自带终端（Terminal.app）启动服务：
-
-```bash
-cd /Users/shaozi/Documents/企业Trae/视频转文稿 && python3 -m streamlit run volume_web.py --server.port 8501 --server.headless true --server.address 0.0.0.0
-```
-
-> 在 macOS 终端中需先 `cd` 到项目目录，否则会报 `File does not exist: volume_web.py`。
-
-访问：
-- 本机：http://localhost:8501
-- 同局域网同事：http://你的内网IP:8501（如 http://192.168.1.100:8501）
-
-关闭服务：
-
-```bash
-# 方式 1：在运行服务的终端窗口按 Ctrl + C
-# 方式 2：在任意终端执行命令杀掉进程
-pkill -f "streamlit run volume_web.py"
-```
-
-**为什么你的电脑需要开机**：Streamlit 服务运行在你的电脑上，服务关闭后网页无法访问。同事访问的是你的电脑提供的服务，因此你必须保持电脑开机且服务运行。
-
-#### 服务运行状态说明
-
-| 场景 | 服务是否关闭 | 说明 |
-|------|-------------|------|
-| 电脑锁屏 | ❌ 不关闭 | 锁屏只锁定界面，后台进程正常运行 |
-| 电脑睡眠/合盖 | ⚠️ 暂停 | 进程不终止但暂停运行，网络断开，唤醒后恢复。睡眠期间他人无法访问 |
-| 退出 Trae 应用 | ✅ 会关闭 | 服务运行在 Trae 终端中，退出 Trae 会终止终端会话及其中进程 |
-| 关闭运行服务的终端标签 | ✅ 会关闭 | 终端被关闭，进程随之终止 |
-| 网络断开 | ❌ 不关闭 | 服务正常运行，但他人无法访问 |
-| macOS 内存不足 | ⚠️ 可能被杀 | 系统可能强制终止占内存的进程 |
-| 系统更新重启 | ✅ 会关闭 | 需重新启动服务 |
-
-> **提示**：如果想脱离 Trae 独立运行服务，可在 macOS 自带终端（Terminal.app）中执行同样的启动命令，这样关闭 Trae 也不影响服务。
+### 2.使用方式
 
 操作流程：
 1. 选择输入方式：拖拽上传本地视频文件，或在文本框中粘贴抖音视频链接（每行一个）
